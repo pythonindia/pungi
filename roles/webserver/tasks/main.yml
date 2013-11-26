@@ -12,6 +12,5 @@
   apt: package={{ item }} state=present
   with_items:
   - nginx
-  - nginx-extras
   notify: 
   - restart nginx
