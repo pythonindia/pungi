@@ -1,4 +1,17 @@
+- name: Install python2.7 and 3.3 related packages
+  apt: package={{ item }} state=present
+  with_items:
+    - python2.7
+    - python2.7-dev
+    - python3.3
+    - python3.3-dev
+    - python-virtualenv
+    - swig
+
 - name: ensure nginx installed
-  apt: pkg=nginx state=present
+  apt: package={{ item }} state=present
+  with_items:
+  - nginx
+  - nginx-extras
   notify: 
   - restart nginx
