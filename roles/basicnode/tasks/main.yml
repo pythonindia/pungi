@@ -56,3 +56,13 @@
 - name: Reconfigure tzdata
   action: command dpkg-reconfigure -f noninteractive tzdata
 
+- name: Install libpam-cracklib
+  apt: package=libpam-cracklib state=present
+
+- name: Increase password strength
+  lineinfile:
+    dest=/etc/pam.d/common-password
+    state=present
+    line='password        requisite                       pam_cracklib.so retry=3 minlen=8 difok=3 minclass=4'
+    regexp="^password.*requisite.*pam_cracklib.so"
+
