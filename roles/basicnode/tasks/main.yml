@@ -1,5 +1,7 @@
 - name: ensure nginx installed
   apt: pkg=nginx state=present
+  notify: 
+  - restart nginx
 
 - name: ensure proper hostname
   lineinfile: 
