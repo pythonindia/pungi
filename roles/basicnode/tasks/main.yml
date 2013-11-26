@@ -19,3 +19,12 @@
     regexp="^.*{{ hostvars[item]['ansible_eth1']['ipv4']['address'] }}.*{{ item }} *$" 
   with_items: groups['all']
 
+# Note: Not using lineinfile due to file not ending with a newline
+# See: https://groups.google.com/d/topic/ansible-project/huR1rU9fAY4/discussion
+- name: Initialise sshd_config
+  template: src=etc/ssh/sshd_config dest=/etc/ssh/sshd_config owner=root group=root 
+  notify: 
+  - restart ssh 
+
+- meta: flush_handlers
+
