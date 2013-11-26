@@ -18,6 +18,12 @@ Vagrant.configure("2") do |config|
     ansible.host_key_checking = false
     ansible.sudo = true
   end
+
+  config.vm.define "vbpungi" do |node|
+    node.vm.box = "saucy32"
+    node.vm.hostname = "vbpungi"
+    node.vm.network "private_network", ip: "192.168.123.2"
+  end 
   
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
