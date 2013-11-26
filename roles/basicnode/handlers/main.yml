@@ -3,7 +3,3 @@
 
 - name: restart iptables-persistent
   service: name=iptables-persistent state=restarted
-
-- name: restart nginx
-  service: name=nginx state=restarted
-
