@@ -5,4 +5,5 @@
   - _private_vars
   roles: 
   - basicnode
+  - pythonhost
   - webserver
