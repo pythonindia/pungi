@@ -1,0 +1,3 @@
+[local]
+vbpungi hostname=vbpungi ansible_ssh_user=vagrant ansible_ssh_private_key_file=insecure_private_key
+
