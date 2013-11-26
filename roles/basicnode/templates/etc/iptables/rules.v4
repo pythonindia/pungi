@@ -1,0 +1,49 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+:INT_IN - [0:0]
+:INT_OUT - [0:0]
+:PAROLE - [0:0]
+:PUB_IN - [0:0]
+:PUB_OUT - [0:0]
+-A INPUT -d 127.0.0.0/8 ! -i lo -p tcp -j LOG --log-prefix "INPUT DROP 0"  
+-A INPUT -d 127.0.0.0/8 ! -i lo -p tcp -j DROP 
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT 
+-A INPUT -i lo -j ACCEPT 
+-A INPUT -s 224.0.0.0/4 -j LOG --log-prefix "INPUT DROP 1 " 
+-A INPUT -s 224.0.0.0/4 -j DROP 
+-A INPUT -i eth+ -j PUB_IN 
+-A INPUT -p tcp -m tcp --dport 137:139 -j DROP 
+-A INPUT -p udp -m udp --dport 137:139 -j DROP 
+-A INPUT -d 224.0.0.0/8 -j DROP 
+-A INPUT -j LOG --log-prefix "INPUT DROP 3 " 
+-A INPUT -j DROP 
+-A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT 
+-A OUTPUT -o eth+ -j PUB_OUT 
+-A INT_IN -p icmp -j ACCEPT 
+-A INT_IN -p tcp -m tcp --dport 137:139 -j DROP 
+-A INT_IN -p udp -m udp --dport 137:139 -j DROP 
+-A INT_IN -d 224.0.0.0/8 -j DROP 
+-A INT_IN -j LOG --log-prefix "INT_IN DROP 5 " 
+-A INT_IN -j DROP 
+-A INT_OUT -p icmp -j ACCEPT 
+-A INT_OUT -j ACCEPT 
+-A PAROLE -j ACCEPT 
+-A PUB_IN -p icmp -m icmp --icmp-type 3 -j ACCEPT 
+-A PUB_IN -p icmp -m icmp --icmp-type 0 -j ACCEPT 
+-A PUB_IN -p icmp -m icmp --icmp-type 11 -j ACCEPT 
+-A PUB_IN -p tcp -m tcp --dport 25 -j PAROLE 
+-A PUB_IN -p tcp -m tcp --dport {{ssh_port}} -j PAROLE 
+-A PUB_IN -p tcp -m tcp --dport 80 -j PAROLE 
+-A PUB_IN -p tcp -m tcp --dport 443 -j PAROLE 
+-A PUB_IN -p tcp -m tcp --dport 137:139 -j DROP 
+-A PUB_IN -p udp -m udp --dport 137:139 -j DROP 
+-A PUB_IN -d 224.0.0.0/8 -j DROP 
+-A PUB_IN -p icmp -j LOG --log-prefix "PUB_IN DROP 2"  
+-A PUB_IN -p icmp -j DROP 
+-A PUB_IN -j LOG --log-prefix "PUB_IN DROP 4 " 
+-A PUB_IN -j DROP 
+-A PUB_OUT -j ACCEPT 
+COMMIT
+
