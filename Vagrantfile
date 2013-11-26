@@ -14,7 +14,8 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/saucy/current/saucy-server-cloudimg-i386-vagrant-disk1.box"
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "playbook.yml"
+    ansible.playbook = "local.yml"
+    ansible.inventory_path = "local.hosts"
     ansible.host_key_checking = false
     ansible.sudo = true
   end
