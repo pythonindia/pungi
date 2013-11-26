@@ -10,3 +10,13 @@ server_timezone=Etc/UTC
 user_pwd=$6$rounds=60000$NKz2O4WgiqdAoV3V$yAxpKIsU2necfJwefES/O34E5U2094NV4cR7sbhrcP7KejFE82VdAz8tCipqO1pJKI1KB1MhR3YGDUJZ8mvXa/
 pyenv_dir=/home/pythonic/pyenvs
 pip_cache={{ pyenv_dir }}/_pipcache
+
+app_dir=/home/pythonic/apps
+
+pipages_app_dir={{ app_dir }}/pipages
+pipages_app_version=master
+
+site_app_dir={{ app_dir }}/mainsite
+site_app_version=master
+
+mainsite_static_root=/home/pythonic/sites/main
