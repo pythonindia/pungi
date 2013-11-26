@@ -1,0 +1,5 @@
+---
+- hosts: default
+  tasks:
+    - name: ensure nginx installed
+      apt: pkg=nginx state=present
