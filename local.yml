@@ -1,6 +1,7 @@
 ---
 - hosts: all
   sudo: yes
-  tasks:
-    - name: ensure nginx installed
-      apt: pkg=nginx state=present
+  vars_files: 
+  - _private_vars
+  roles: 
+  - basicnode

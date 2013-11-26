@@ -1,0 +1,2 @@
+- name: ensure nginx installed
+  apt: pkg=nginx state=present
