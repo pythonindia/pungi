@@ -1,0 +1,35 @@
+- name: Create group {{ group }}
+  group: name={{ group }} state=present
+
+- name: Create user {{ user }}
+  user:
+    name={{ user }}  
+    comment={{ user_name }}
+    group={{ group }}
+    createhome=yes 
+    home=/home/{{ user }} 
+    shell=/bin/bash
+    password={{ password }}
+    state=present 
+
+- name: ensure ssh directory exists for {{ user }}
+  file: dest=/home/{{ user }}/.ssh owner={{ user }} group={{ group }} state=directory
+  when: pub_key is defined
+  
+- name: ensure public key is in authorized_keys
+  lineinfile:
+    dest=/home/{{ user }}/.ssh/authorized_keys
+    state=present
+    line="{{ pub_key }}"
+    insertafter=EOF
+    create=yes
+    owner={{ user }}
+    group={{ group }}
+    mode=600
+  when: pub_key is defined
+  
+- name: ensure entry in sudoers file for {{ user }}
+  sudo: yes
+  lineinfile: dest=/etc/sudoers state=present regexp=^%{{ user }} line=%{{ user }}\ ALL=(ALL)\ NOPASSWD:\ ALL
+  when: sudo_allowed is defined
+

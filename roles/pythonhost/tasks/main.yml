@@ -1,0 +1,16 @@
+- name: Create directory for virtual environments
+  file: path={{ pyenv_dir }} state=directory
+
+- name: Create mainsite virtualenv
+  command: /usr/bin/virtualenv -p /usr/bin/python3.3 {{ pyenv_dir }}/mainsite
+
+- name: Install pelican to mainsite virtualenv
+  pip: name={{ item['name'] }}
+       version={{ item['version'] }}
+       executable=pip-3.3 
+       virtualenv={{ pyenv_dir}}/mainsite 
+       state=present
+       extra_args="--download-cache {{ pip_cache }}"
+  with_items:
+  - name: pelican 
+    version: 3.3

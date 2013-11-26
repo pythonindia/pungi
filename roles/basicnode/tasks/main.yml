@@ -71,3 +71,12 @@
   notify:
   - restart iptables-persistent
 
+- name: create user pythonic
+  include: create_user.yml group=www-data user=pythonic user_name=Python_Apps_Administrator sudo_allowed=yes pub_key="{{ lookup('file','~/.ssh/id_dsa.pub') }}" password={{ user_pwd }}
+
+#- name: create additional users
+#  include: create_user.yml user={{ item }} group=www-data user_name={{ item }} password={{ user_pwd }}
+#  with_items:
+#    user1
+#    user2
+
