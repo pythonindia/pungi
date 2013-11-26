@@ -5,4 +5,5 @@ vbpungi hostname=vbpungi ansible_ssh_user=vagrant ansible_ssh_private_key_file=i
 use_apt_proxy=yes
 apt_proxy=192.168.123.1
 apt_proxy_port=3142
+server_timezone=Etc/UTC
 

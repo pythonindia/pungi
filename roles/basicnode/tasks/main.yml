@@ -41,3 +41,18 @@
 - name: Upgrade apt cache
   apt: upgrade=yes
 
+- name: Install english language packs
+  apt: package=language-pack-en
+
+- name: Add task for updating time daily using ntp 
+  template: src=etc/cron.daily/ntpdate dest=/etc/cron.daily/ntpdate mode=755
+
+- name: Set timezone to UTC 
+  action: shell echo {{ server_timezone }} > /etc/timezone 
+
+- name: Set localtime to UTC 
+  file: src=/usr/share/zoneinfo/{{ server_timezone }} dest=/etc/localtime
+
+- name: Reconfigure tzdata
+  action: command dpkg-reconfigure -f noninteractive tzdata
+
