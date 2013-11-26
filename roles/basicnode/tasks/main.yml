@@ -1,2 +1,21 @@
 - name: ensure nginx installed
   apt: pkg=nginx state=present
+
+- name: ensure proper hostname
+  lineinfile: 
+    dest=/etc/hostname 
+    state=present 
+    line={{ hostname }}
+    regexp="^.*$"
+
+- name: set hostname
+  action: command hostname -F /etc/hostname
+
+- name: update /etc/hosts
+  lineinfile: 
+    dest=/etc/hosts
+    state=present 
+    line="{{ hostvars[item]['ansible_eth1']['ipv4']['address'] }} {{ item }}" 
+    regexp="^.*{{ hostvars[item]['ansible_eth1']['ipv4']['address'] }}.*{{ item }} *$" 
+  with_items: groups['all']
+
