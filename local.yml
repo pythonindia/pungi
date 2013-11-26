@@ -1,9 +1,1 @@
----
-- hosts: all
-  sudo: yes
-  vars_files: 
-  - _private_vars
-  roles: 
-  - basicnode
-  - pythonhost
-  - webserver
+- include: basic.yml
