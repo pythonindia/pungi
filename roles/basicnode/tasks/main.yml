@@ -28,3 +28,16 @@
 
 - meta: flush_handlers
 
+- name: Add apt-proxy
+  template: src=etc/apt/apt.conf.d/01proxy dest=/etc/apt/apt.conf.d/01proxy
+  when: use_apt_proxy is defined
+
+- name: Update apt keys
+  command: apt-key update
+
+- name: Update apt cache
+  apt: update_cache=yes
+
+- name: Upgrade apt cache
+  apt: upgrade=yes
+
