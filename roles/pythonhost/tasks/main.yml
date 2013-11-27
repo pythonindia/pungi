@@ -5,34 +5,34 @@
   command: /usr/bin/virtualenv -p /usr/bin/python3.3 {{ pyenv_dir }}/mainsite
 
 
-########################################################################################
-#  THIS IS FAILING BECAUSE MYNT INSTALLATION ISN'T GOING THRU
-########################################################################################
-- name: Install dependent to mainsite virtualenv
-  pip: name={{ item['name'] }}
-       version={{ item['version'] }}
-       executable=pip-3.3
-       virtualenv={{ pyenv_dir}}/mainsite 
-       state=present
-       extra_args="--download-cache {{ pip_cache }}"
-  with_items:
+#########################################################################################
+##  THIS IS FAILING BECAUSE MYNT INSTALLATION ISN'T GOING THRU
+#########################################################################################
+#- name: Install dependent to mainsite virtualenv
+#  pip: name={{ item['name'] }}
+#       version={{ item['version'] }}
+#       executable=pip-3.3
+#       virtualenv={{ pyenv_dir}}/mainsite 
+#       state=present
+#       extra_args="--download-cache {{ pip_cache }}"
+#  with_items:
 #  - name: pelican 
 #    version: 3.3
-  - name: mynt 
-    version: 0.2.3
+#  - name: mynt 
+#    version: 0.2.3
 
-- name: Install pipages
-  pip: name=https://github.com/dnene/pipages/tarball/master
-       executable=pip-3.3 
-       virtualenv={{ pyenv_dir}}/mainsite 
-       state=present
+#- name: Install pipages
+#  pip: name=https://github.com/dnene/pipages/tarball/master
+#       executable=pip-3.3 
+#       virtualenv={{ pyenv_dir}}/mainsite 
+#       state=present
 
-#- name: Install git
-#  sudo_user: root
-#  apt: package=git state=present
+- name: Install git
+  sudo_user: root
+  apt: package=git state=present
 
-#- name: Create directory for checking out apps
-#  file: path={{ app_dir }} state=directory
+- name: Create directory for checking out apps
+  file: path={{ app_dir }} state=directory
 
 #- name: checkout pipages
 #  git: repo=https://github.com/anandology/pipages.git dest={{ pipages_app_dir }} version={{ pipages_app_version }}
@@ -43,6 +43,6 @@
 - name: Ensure static site directory exists
   file: path={{ mainsite_static_root }} owner=pythonic group=www-data mode=755 state=directory
 
-- name: Generate site
-  shell: . {{ pyenv_dir }}/mainsite/bin/activate && pipages python.org.in --repo git://github.com/pythonindia/python.org.in.git --engine mynt --root {{ mainsite_static_root }}
+#- name: Generate site
+#  shell: . {{ pyenv_dir }}/mainsite/bin/activate && pipages python.org.in --repo git://github.com/pythonindia/python.org.in.git --engine mynt --root {{ mainsite_static_root }}
 
