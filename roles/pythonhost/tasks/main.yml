@@ -35,7 +35,7 @@
        state=present
 
 - name: Generate site
-  shell: . {{ pyenv_dir }}/mainsite/bin/activate && pipages python.org.in --repo git://github.com/pythonindia/python.org.in.git --engine mynt --root {{ mainsite_static_cache }}
+  shell: . {{ pyenv_dir }}/mainsite/bin/activate && pipages {{ hostname }} --repo git://github.com/pythonindia/python.org.in.git --engine mynt --root {{ mainsite_static_cache }}
 
 - name: Delete site directory if it exists 
   sudo_user: root
@@ -46,4 +46,4 @@
   file: path={{ mainsite_static_root }} state=directory owner=www-data group=www-data mode=775
 
 - name: Copy generated site content
-  shell: cp -r {{ mainsite_static_cache }}/build/python.org.in/* {{ mainsite_static_root }}
+  shell: cp -r {{ mainsite_static_cache }}/build/{{ hostname }}/* {{ mainsite_static_root }}
