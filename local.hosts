@@ -20,4 +20,4 @@ site_app_dir={{ app_dir }}/mainsite
 site_app_version=master
 
 mainsite_static_cache=/home/pythonic/cache/mainsite
-mainsite_static_root=/home/pythonic/sites/mainsite
+mainsite_static_root=/usr/share/nginx/html
