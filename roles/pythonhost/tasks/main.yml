@@ -38,5 +38,13 @@
   file: path={{ mainsite_static_root }} owner=pythonic group=www-data mode=755 state=directory
 
 - name: Generate site
-  shell: . {{ pyenv_dir }}/mainsite/bin/activate && pipages python.org.in --repo git://github.com/pythonindia/python.org.in.git --engine mynt --root {{ mainsite_static_root }}
+  shell: . {{ pyenv_dir }}/mainsite/bin/activate && pipages python.org.in --repo git://github.com/pythonindia/python.org.in.git --engine mynt --root {{ mainsite_static_cache }}
 
+- name: Delete site directory if it exists 
+  file: path={{ mainsite_static_root }} state=absent
+
+- name: Create site directory
+  file: path={{ mainsite_static_root }} state=directory
+
+- name: Copy generated site content
+  shell: cp -r {{ mainsite_static_cache }}/build/python.org.in/* {{ mainsite_static_root }}
