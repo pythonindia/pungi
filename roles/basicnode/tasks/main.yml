@@ -44,6 +44,9 @@
 - name: Add task for updating time daily using ntp 
   template: src=etc/cron.daily/ntpdate dest=/etc/cron.daily/ntpdate mode=755
 
+- name: set locale
+  command: /usr/sbin/update-locale LANG={{ locale }} LC_ALL={{ locale }}
+
 - name: Set timezone to UTC 
   action: shell echo {{ server_timezone }} > /etc/timezone 
 
