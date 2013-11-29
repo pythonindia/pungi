@@ -1,0 +1,24 @@
+- name: ensure exim4 installed
+  apt: package={{ item }} state=present
+  with_items:
+  - exim4-daemon-light
+
+- name: 
+  lineinfile:
+    dest="/etc/exim4/conf.d/main/01_exim4-config_listmacrosdefs"
+    state=present
+    line="domainlist local_domains = @:localhost:dsearch;/etc/exim4/virtual"
+    regexp="^domainlist local_domains = MAIN_LOCAL_DOMAINS"
+  notify: 
+  - restart exim4
+
+
+
+- name: Initialise exim4 vdom aliases
+  template: src=etc/exim4/conf.d/router/350_exim4-config_vdom_aliases dest=/etc/exim4/conf.d/router/350_exim4-config_vdom_aliases owner=root group=root 
+  notify: 
+  - restart exim4
+
+- name: Ensure /etc/exim4/virtual directory present
+  sudo_user: root
+  file: path=/etc/exim4/virtual state=directory owner=www-data group=www-data mode=775
