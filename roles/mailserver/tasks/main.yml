@@ -12,8 +12,6 @@
   notify: 
   - restart exim4
 
-
-
 - name: Initialise exim4 vdom aliases
   template: src=etc/exim4/conf.d/router/350_exim4-config_vdom_aliases dest=/etc/exim4/conf.d/router/350_exim4-config_vdom_aliases owner=root group=root 
   notify: 
@@ -22,3 +20,8 @@
 - name: Ensure /etc/exim4/virtual directory present
   sudo_user: root
   file: path=/etc/exim4/virtual state=directory owner=www-data group=www-data mode=775
+
+- name: Setup exim4 config
+  template: src=etc/exim4/update-exim4.conf.conf dest=/etc/exim4/update-exim4.conf.conf  owner=root group=root 
+  notify: 
+  - restart exim4
